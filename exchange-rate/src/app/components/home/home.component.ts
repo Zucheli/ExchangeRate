@@ -15,18 +15,27 @@ import { AuthService } from '../../core/service/auth.service';
 export class HomeComponent {
   constructor(private authService: AuthService) {}
 
+  code: string = '';
+
   currentValue: string = '';
   currentFromSymbol: string = '';
   currentToSymbol: string = '';
   currentLastUpdate: string = '';
-  currentExchangeRate: number = 0;
+
+  cards: any[] = [];
+  dailyHigh: string = '';
+  dailyLow: string = '';
+  dailyOpen: string = '';
+  dailyClose: string = '';
+  dailyDate: string = '';
 
   openDetailCurrentExchangeRate: boolean = false;
+  openDetailDailyExchangeRate: boolean = false;
 
   consultExchange(form: any) {
-    let code = form.value.exchangeCode;
+    this.code = form.value.exchangeCode;
 
-    if (code == '' || code == undefined) {
+    if (this.code == '' || this.code == undefined) {
       Swal.fire({
         text: 'Fill the currency code!',
         icon: 'warning',
@@ -34,7 +43,12 @@ export class HomeComponent {
       return;
     }
 
-    if (code != 'usd' && code != 'eur' && code != 'gbp' && code != 'jpy') {
+    if (
+      this.code != 'usd' &&
+      this.code != 'eur' &&
+      this.code != 'gbp' &&
+      this.code != 'jpy'
+    ) {
       Swal.fire({
         text: 'Enter any of the following currency codes, USD, EUR, GBP or JPY!',
         icon: 'warning',
@@ -42,7 +56,7 @@ export class HomeComponent {
       return;
     }
 
-    this.authService.getCurrentExchangeRate(code).subscribe({
+    this.authService.getCurrentExchangeRate(this.code).subscribe({
       next: (response) => {
         if (
           response == null ||
@@ -62,15 +76,10 @@ export class HomeComponent {
         this.currentToSymbol = response.toSymbol;
         this.currentLastUpdate = formatDate(
           response.lastUpdatedAt,
-          'dd/MM/yyyy - hh:mm',
+          'dd/MM/yyyy - HH:mm',
           'pt-BR'
         );
-        this.currentExchangeRate = response.exchangeRate;
-
-        let value = 1 / this.currentExchangeRate;
-        this.currentValue = formatNumber(value, 'pt-BR');
-
-        console.log(response);
+        this.currentValue = formatNumber(1 / response.exchangeRate, 'pt-BR');
       },
       error: (error) => {
         Swal.fire({
@@ -79,5 +88,46 @@ export class HomeComponent {
         });
       },
     });
+  }
+
+  consultLastDays() {
+    this.authService.getDailyExchangeRate(this.code).subscribe({
+      next: (response) => {
+        if (
+          response == null ||
+          response == undefined ||
+          response.success == false
+        ) {
+          Swal.fire({
+            text: 'Error!',
+            icon: 'error',
+          });
+          this.openDetailDailyExchangeRate = false;
+          return;
+        }
+
+        this.openDetailDailyExchangeRate = true;
+        this.cards = response.data;
+      },
+      error: (error) => {
+        Swal.fire({
+          text: 'Error!',
+          icon: 'error',
+        });
+      },
+    });
+  }
+
+  formatDate(date: any): string {
+    return formatDate(date, 'dd/MM/yyyy', 'pt-BR');
+  }
+
+  formatNumber(number: any): string {
+    return formatNumber(1 / number, 'pt-BR', '1.4-4');
+  }
+
+  formatPercent(number: any): string {
+    let percent = formatNumber(number, 'pt-BR', '1.2-2');
+    return number >= 0 ? `+${percent}%` : `${percent}%`;
   }
 }

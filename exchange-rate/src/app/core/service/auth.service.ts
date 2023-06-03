@@ -21,4 +21,10 @@ export class AuthService {
       `${this.baseURL}/open/currentExchangeRate?apiKey=${this.keyApi}&from_symbol=BRL&to_symbol=${code}`
     );
   }
+
+  getDailyExchangeRate(code: any): Observable<any> {
+    return this.http.get<any>(
+      `${this.baseURL}/open/dailyExchangeRate?apiKey=${this.keyApi}&from_symbol=BRL&to_symbol=${code}`
+    );
+  }
 }

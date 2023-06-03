@@ -29,6 +29,49 @@
     <div class="exchangeRateValue">
       <p>R$ {{ currentValue }}</p>
     </div>
+    <div class="exchangeRateDays">
+      <p>Last 30 Days</p>
+      <div (click)="consultLastDays()" class="icon"></div>
+    </div>
+    <div class="exchangeRateCards">
+      <div class="cards" *ngIf="openDetailDailyExchangeRate">
+        <div
+          class="card"
+          *ngFor="let card of cards | slice : 0 : 30; let i = index"
+        >
+          <p class="date">{{ formatDate(card.date) }}</p>
+          <div class="infos">
+            <div class="left">
+              <p>
+                Open: <span>R$ {{ formatNumber(card.open) }}</span>
+              </p>
+              <p>
+                Close: <span>R$ {{ formatNumber(card.close) }}</span>
+              </p>
+            </div>
+            <div class="right">
+              <p>
+                High: <span>R$ {{ formatNumber(card.high) }}</span>
+              </p>
+              <p>
+                Low: <span>R$ {{ formatNumber(card.low) }}</span>
+              </p>
+            </div>
+          </div>
+          <p class="diff">
+            Close Diff (%):
+            <span
+              [ngClass]="{
+                negative: (cards[i].close - cards[i + 1].close) * 100 < 0
+              }"
+              >{{
+                formatPercent((cards[i].close - cards[i + 1].close) * 100)
+              }}</span
+            >
+          </p>
+        </div>
+      </div>
+    </div>
   </section>
   <footer>
     <p>Copyright 2022 - Action Labs</p>
