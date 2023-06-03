@@ -1,0 +1,149 @@
+.container {
+    margin: auto;
+    text-align: center;
+
+    header {
+        width: 100%;
+        height: 50px;
+        padding: 10px 0;
+        border-bottom: 1px solid #D9D9D9;
+
+        .img {
+            width: 160px;
+            height: 45px;
+            margin: auto;
+            background-size: contain;
+            background-repeat: no-repeat;
+            background-image: url(../../../assets/img/logo-actionLabs.png);
+        }
+    }
+
+    .content {
+        gap: 20px;
+        width: 300px;
+        margin: auto;
+        display: flex;
+        padding: 20px 0;
+        flex-direction: column;
+
+        h1 {
+            color: #07B0FB;
+            font-size: 24px;
+            text-transform: uppercase;
+        }
+
+        form {
+            gap: 20px;
+            display: flex;
+            flex-direction: column;
+
+            .input {
+                width: 280px;
+                height: 56px;
+                border: none;
+                padding: 0 10px;
+                text-transform: uppercase;
+                background-color: #F4F4F4;
+                border-radius: 4px 4px 0px 0px;
+
+                &::placeholder {
+                    text-transform: initial;
+                }
+    
+                &:focus {
+                    outline: none;
+                    border-bottom: 2px solid #07B0FB;
+                }
+            }
+
+            .button {
+                width: 100%;
+                color: #ffffff;
+                height: 48px;
+                border: none;
+                font-size: 16px;
+                cursor: pointer;
+                border-radius: 100px;
+                background-color: #07B0FB;
+                text-transform: uppercase;
+            }
+        }           
+    }
+
+    .contentCurrent {
+        gap: 20px;
+        display: flex;
+        flex-direction: column;
+        .line {
+            width: 100%;
+            height: 1px;
+            background-color: #D9D9D9;
+        }
+
+        .exchangeRateNow {
+            width: 300px;
+            margin: auto;
+            display: flex;
+            justify-content: space-between;
+
+            .left {
+                text-align: left;
+
+                p {
+                    font-size: 18px;
+                    color: #262626;
+                    font-weight: bold;
+                }
+
+                span {
+                    font-size: 14px;
+                    color: #333333;
+                }
+            }
+
+            .right {
+                display: flex;
+                align-items: center;
+
+                p {
+                    font-size: 24px;
+                    color: #07B0FB;
+                    font-weight: bold;
+                    text-transform: uppercase;
+                }
+            }
+        }
+
+        .exchangeRateValue {
+            width: 300px;
+            height: 72px;
+            margin: auto;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            background-color: rgba(7, 176, 251, 0.1);
+
+            p {
+                font-size: 32px;
+                color: #07B0FB;
+                font-weight: bold;
+            }
+        }
+    }
+
+    footer {
+        bottom: 0;
+        width: 100%;
+        height: 30px;
+        display: flex;
+        position: fixed;
+        align-items: center;
+        justify-content: center;
+        background-color: #07B0FB;;
+
+        p {
+            color: #ffffff;
+            font-size: 12px;
+        }
+    }
+}

@@ -1,0 +1,36 @@
+<section class="container">
+  <header>
+    <div class="img"></div>
+  </header>
+  <section class="content">
+    <h1>BRL Exchange Rate</h1>
+    <form #f="ngForm" (ngSubmit)="consultExchange(f)">
+      <input
+        class="input"
+        type="text"
+        placeholder="Enter the currency code"
+        name="exchangeCode"
+        ngModel
+      />
+      <input class="button" type="submit" value="Exchange Result" />
+    </form>
+  </section>
+  <section class="contentCurrent" *ngIf="openDetailCurrentExchangeRate">
+    <div class="line"></div>
+    <div class="exchangeRateNow">
+      <div class="left">
+        <p>Exchange rate now</p>
+        <span>{{ currentLastUpdate }}</span>
+      </div>
+      <div class="right">
+        <p>{{ currentToSymbol }}/{{ currentFromSymbol }}</p>
+      </div>
+    </div>
+    <div class="exchangeRateValue">
+      <p>R$ {{ currentValue }}</p>
+    </div>
+  </section>
+  <footer>
+    <p>Copyright 2022 - Action Labs</p>
+  </footer>
+</section>
